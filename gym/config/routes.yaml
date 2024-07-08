@@ -1,0 +1,40 @@
+#controllers:
+#    resource:
+#        path: ../src/Controller/
+#        namespace: App\Controller
+#    type: attribute
+
+# Pantalla de inicio #
+app_login: 
+    path: /login
+    controller: App\Controller\LoginController::login
+
+app_logout:
+    path: /logout
+    controller: App\Controller\LoginController::logout
+
+app_routine:
+    path: /routine/list
+    controller: App\Controller\RoutineController::index
+    methods: GET
+
+routine_edit:
+    path: /routine/{id}/edit
+    controller: App\Controller\RoutineController::editRoutine
+    methods: [GET, POST]
+
+routine_delete:
+    path: /routine/{id}/delete
+    controller: App\Controller\RoutineController::deleteRoutine
+    methods: [GET, POST]
+
+user_register:
+    path: /register
+    controller: App\Controller\UserController::register
+    methods: [GET, POST]
+
+newRutine:
+    path: /routine/new
+    controller: App\Controller\RoutineController::newRutine
+    methods: [GET, POST]
+

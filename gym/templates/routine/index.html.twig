@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1> Rutinas </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Rutina</th>
+                <th>Enfoque</th>
+                <th>Asignada a: </th>
+                <th>Creada por: </th>
+                <th>Ejercicios</th>
+                <th>Accciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for routine in routines %}
+                <tr>
+                    <td>{{ routine.name }}</td>
+                    <td>{{ routine.focus }}</td>
+                    <td>{{ routine.assignedTo }}</td> {# Assuming assignedTo is User entity and username is a field in User entity #}
+                    <td>{{ routine.user }}</td> {# Assuming user is User entity and username is a field in User entity #}
+                    
+                    <td>
+                        <ul>
+                            {% for exercise in routine.exercises %}
+                                <li>{{ exercise.name }} - Repeticiones: {{ exercise.repetitions }}, Series: {{ exercise.series }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <a href="{{ path('routine_edit', {'id': routine.id}) }}" class="btn btn-primary">Editar</a>
+                        <form action="{{ path('routine_delete', {'id': routine.id}) }}" method="post" style="display: inline-block;">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this routine?')">Borrar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

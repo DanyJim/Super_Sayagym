@@ -1,0 +1,60 @@
+{# templates/routine/new.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Create New Routine with Exercises{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-header text-center">
+                    <h4>Crear nueva Rutina</h4>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.focus) }}
+                        
+                        <h5 class="mt-4">Ejercicios</h5>
+                        <div id="exercises-collection" data-prototype="{{ form_widget(form.exercises.vars.prototype)|e }}">
+                            {% for exerciseForm in form.exercises %}
+                                <div class="exercise-item">
+                                    {{ form_row(exerciseForm.name) }}
+                                    {{ form_row(exerciseForm.repetitions) }}
+                                    {{ form_row(exerciseForm.series) }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <button type="button" class="btn btn-secondary mt-3" id="add-exercise">Agregar Ejercicio</button>
+
+                        <button type="submit" class="btn btn-primary btn-block mt-3">Crear</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var $addExerciseButton = document.getElementById('add-exercise');
+        var $collectionHolder = document.getElementById('exercises-collection');
+        var index = $collectionHolder.children.length;
+
+        $addExerciseButton.addEventListener('click', function() {
+            var prototype = $collectionHolder.getAttribute('data-prototype');
+            var newForm = prototype.replace(/__name__/g, index);
+            index++;
+
+            var newFormDiv = document.createElement('div');
+            newFormDiv.classList.add('exercise-item');
+            newFormDiv.innerHTML = newForm;
+            $collectionHolder.appendChild(newFormDiv);
+        });
+    });
+</script>
+{% endblock %}
